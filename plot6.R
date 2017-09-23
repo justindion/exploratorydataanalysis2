@@ -20,15 +20,6 @@ MV <- transform(MV,
 MVPM25ByYearAndRegion <- ddply(MV, .(year, region), function(x) sum(x$Emissions))
 colnames(MVPM25ByYearAndRegion)[3] <- "Emissions"
 
-# This plot was unsatisfying due to vastly different scales
-png("plot6a.png")
-qplot(year, Emissions, data=MVPM25ByYearAndRegion, geom="line", color=region) +
-#qplot(year, Emissions, data=MVPM25ByYearAndRegion, geom="line", facets=region~.) +
-  ggtitle(expression("Baltimore City and Los Angeles County" ~ PM[2.5] ~ "Motor Vehicle Emissions by Year")) +
-  xlab("Year") +
-  ylab(expression("Total" ~ PM[2.5] ~ "Emissions (tons)"))
-dev.off()
-
 # Create a plot normalized to 1999 levels to better show change over time
 Balt1999Emissions <- subset(MVPM25ByYearAndRegion,
                             year == 1999 & region == "Baltimore City")$Emissions
